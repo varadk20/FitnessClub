@@ -380,7 +380,7 @@
           const amount = Math.round(price * val * 100); // multiply price by val
 
           try {
-            const res = await fetch("https://fitnessclub.onrender.com/create-checkout-session", {
+            const res = await fetch("https://fitnessclub-tjmf.onrender.com/create-checkout-session", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, amount }),

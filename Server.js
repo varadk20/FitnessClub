@@ -112,8 +112,8 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `https://fitnessclub.onrender.com/result.html?status=success`,
-cancel_url: `https://fitnessclub.onrender.com/result.html?status=cancel`,
+      success_url: `https://fitness-club-brown.vercel.app//result.html?status=success`,
+cancel_url: `https://fitness-club-brown.vercel.app//result.html?status=cancel`,
     });
 
     // Return the URL for the hosted checkout page
