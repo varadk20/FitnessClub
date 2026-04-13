@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment Result</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 50px;
+      background: #111;
+      color: white;
+    }
+    .success { color: #00e676; }
+    .cancel { color: #ff5252; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ff5722;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="message"></h1>
+  <p id="subtext"></p>
+  <a href="/">Go Back Home</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+
+    const message = document.getElementById("message");
+    const subtext = document.getElementById("subtext");
+
+    if (status === "success") {
+      message.innerText = "✅ Payment Successful!";
+      message.classList.add("success");
+      subtext.innerText = "Thank you for your purchase 💪";
+    } 
+    else if (status === "cancel") {
+      message.innerText = "❌ Payment Cancelled";
+      message.classList.add("cancel");
+      subtext.innerText = "Your payment was not completed.";
+    } 
+    else {
+      message.innerText = "⚠️ Unknown Status";
+    }
+  </script>
+
+</body>
+</html>

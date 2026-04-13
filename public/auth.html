@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auth</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e1e2f, #2c5364);
+    }
+
+    .card {
+      width: 320px;
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #ff5722;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0px;
+      border: none;
+      border-radius: 6px;
+      background: #222;
+      color: white;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border: 1px solid #ff5722;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #ff5722;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #ff784e;
+    }
+
+    .toggle {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .toggle span {
+      color: #ff5722;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- LOGIN FIRST -->
+  <div id="loginBox">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <div class="toggle" onclick="showSignup()">
+      Don’t have an account? <span>Signup</span>
+    </div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="signupBox" class="hidden">
+    <h2>Signup</h2>
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <button onclick="signup()">Signup</button>
+
+    <div class="toggle" onclick="showLogin()">
+      Already have an account? <span>Login</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showSignup() {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("signupBox").classList.remove("hidden");
+  }
+
+  function showLogin() {
+    document.getElementById("signupBox").classList.add("hidden");
+    document.getElementById("loginBox").classList.remove("hidden");
+  }
+
+  async function signup() {
+    const email = document.getElementById("signupEmail").value;
+    const password = document.getElementById("signupPassword").value;
+
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+
+    if (data.message === "Signup successful") {
+      showLogin();
+    }
+  }
+
+  async function login() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+
+    if (data.message === "Login successful") {
+      localStorage.setItem("user", email);
+      window.location.href = "/";
+    }
+  }
+</script>
+
+</body>
+</html>
